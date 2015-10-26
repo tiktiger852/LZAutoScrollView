@@ -152,7 +152,9 @@
     [self loadImageWithURLString:self.images[self.currentImageIndex] andImageView:self.currentImageView];
     [self loadImageWithURLString:self.images[self.nextImageIndex] andImageView:self.nextImageView];
     
-    self.titleLabel.text = self.titles[self.currentImageIndex];
+    if(self.titles) {
+        self.titleLabel.text = self.titles[self.currentImageIndex];
+    }
     self.pageControl.currentPage = self.currentImageIndex;
 }
 
