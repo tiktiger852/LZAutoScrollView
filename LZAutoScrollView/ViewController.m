@@ -7,8 +7,9 @@
 //
 
 #import "ViewController.h"
+#import "LZAutoScrollView.h"
 
-@interface ViewController ()
+@interface ViewController ()<LZAutoScrollViewDelegate>
 
 @end
 
@@ -17,6 +18,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    LZAutoScrollView *autoScrollView = [[LZAutoScrollView alloc] initWithFrame:CGRectMake(0, 20, 320, 150)];
+    autoScrollView.delegate = self;
+    autoScrollView.titles = @[@"一", @"二", @"三"];
+    autoScrollView.images = @[
+                              @"http://img2.3lian.com/2014/f7/5/d/22.jpg",
+                              @"http://image.tianjimedia.com/uploadImages/2011/327/1VPRY46Q4GB7.jpg",
+                              @"http://img6.faloo.com/Picture/0x0/0/747/747488.jpg"
+                              ];
+    autoScrollView.placeHolder = [UIImage imageNamed:@"place.jpg"];
+    [autoScrollView createViews];
+    [self.view addSubview:autoScrollView];
+}
+
+- (void)imageClicked:(NSInteger)index {
+    NSLog(@"index: %ld", index);
 }
 
 - (void)didReceiveMemoryWarning {

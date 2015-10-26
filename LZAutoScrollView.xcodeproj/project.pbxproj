@@ -10,9 +10,10 @@
 		04552AE01BDA3A6000DDE590 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04552ADF1BDA3A6000DDE590 /* main.m */; };
 		04552AE31BDA3A6000DDE590 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04552AE21BDA3A6000DDE590 /* AppDelegate.m */; };
 		04552AE61BDA3A6000DDE590 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04552AE51BDA3A6000DDE590 /* ViewController.m */; };
-		04552AE91BDA3A6000DDE590 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04552AE71BDA3A6000DDE590 /* Main.storyboard */; };
 		04552AEB1BDA3A6000DDE590 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04552AEA1BDA3A6000DDE590 /* Assets.xcassets */; };
 		04552AEE1BDA3A6000DDE590 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04552AEC1BDA3A6000DDE590 /* LaunchScreen.storyboard */; };
+		04552AF81BDA3AA400DDE590 /* LZAutoScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04552AF71BDA3AA400DDE590 /* LZAutoScrollView.m */; };
+		045BB88D1BDDE81C00670D39 /* place.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 045BB88C1BDDE81C00670D39 /* place.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,10 +23,12 @@
 		04552AE21BDA3A6000DDE590 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		04552AE41BDA3A6000DDE590 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		04552AE51BDA3A6000DDE590 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		04552AE81BDA3A6000DDE590 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		04552AEA1BDA3A6000DDE590 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04552AED1BDA3A6000DDE590 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04552AEF1BDA3A6000DDE590 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04552AF61BDA3AA400DDE590 /* LZAutoScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZAutoScrollView.h; sourceTree = "<group>"; };
+		04552AF71BDA3AA400DDE590 /* LZAutoScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZAutoScrollView.m; sourceTree = "<group>"; };
+		045BB88C1BDDE81C00670D39 /* place.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = place.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,14 +61,12 @@
 		04552ADD1BDA3A6000DDE590 /* LZAutoScrollView */ = {
 			isa = PBXGroup;
 			children = (
+				04552AF51BDA3A7100DDE590 /* LZAutoScrollView */,
 				04552AE11BDA3A6000DDE590 /* AppDelegate.h */,
 				04552AE21BDA3A6000DDE590 /* AppDelegate.m */,
 				04552AE41BDA3A6000DDE590 /* ViewController.h */,
 				04552AE51BDA3A6000DDE590 /* ViewController.m */,
-				04552AE71BDA3A6000DDE590 /* Main.storyboard */,
 				04552AEA1BDA3A6000DDE590 /* Assets.xcassets */,
-				04552AEC1BDA3A6000DDE590 /* LaunchScreen.storyboard */,
-				04552AEF1BDA3A6000DDE590 /* Info.plist */,
 				04552ADE1BDA3A6000DDE590 /* Supporting Files */,
 			);
 			path = LZAutoScrollView;
@@ -74,9 +75,21 @@
 		04552ADE1BDA3A6000DDE590 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				04552AEC1BDA3A6000DDE590 /* LaunchScreen.storyboard */,
+				04552AEF1BDA3A6000DDE590 /* Info.plist */,
+				045BB88C1BDDE81C00670D39 /* place.jpg */,
 				04552ADF1BDA3A6000DDE590 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		04552AF51BDA3A7100DDE590 /* LZAutoScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				04552AF61BDA3AA400DDE590 /* LZAutoScrollView.h */,
+				04552AF71BDA3AA400DDE590 /* LZAutoScrollView.m */,
+			);
+			path = LZAutoScrollView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,7 +152,7 @@
 			files = (
 				04552AEE1BDA3A6000DDE590 /* LaunchScreen.storyboard in Resources */,
 				04552AEB1BDA3A6000DDE590 /* Assets.xcassets in Resources */,
-				04552AE91BDA3A6000DDE590 /* Main.storyboard in Resources */,
+				045BB88D1BDDE81C00670D39 /* place.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +165,7 @@
 			files = (
 				04552AE61BDA3A6000DDE590 /* ViewController.m in Sources */,
 				04552AE31BDA3A6000DDE590 /* AppDelegate.m in Sources */,
+				04552AF81BDA3AA400DDE590 /* LZAutoScrollView.m in Sources */,
 				04552AE01BDA3A6000DDE590 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -159,14 +173,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		04552AE71BDA3A6000DDE590 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				04552AE81BDA3A6000DDE590 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		04552AEC1BDA3A6000DDE590 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -262,7 +268,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = LZAutoScrollView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yan.LZAutoScrollView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -273,7 +281,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = LZAutoScrollView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yan.LZAutoScrollView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -299,6 +309,7 @@
 				04552AF41BDA3A6000DDE590 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
