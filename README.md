@@ -1,5 +1,5 @@
 # LZAutoScrollView
-![](https://github.com/00o0o/LZAutoScrollView/blob/master/2015-10-27%2012_50_51.gif)
+![](https://github.com/00o0o/LZAutoScrollView/blob/master/2015-10-27%2017_28_23.gif)
 
 
 使用说明：
