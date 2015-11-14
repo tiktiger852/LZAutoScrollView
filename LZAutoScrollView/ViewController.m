@@ -28,8 +28,8 @@
                               @"http://img6.faloo.com/Picture/0x0/0/747/747488.jpg"
                               ];
     autoScrollView.placeHolder = [UIImage imageNamed:@"place.jpg"];
-    [autoScrollView createViews];
     [self.view addSubview:autoScrollView];
+    [autoScrollView reloadData];
 }
 
 - (void)imageClicked:(NSInteger)index {

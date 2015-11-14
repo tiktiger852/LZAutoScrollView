@@ -13,7 +13,7 @@ autoScrollView.images = @[
                           @"http://img6.faloo.com/Picture/0x0/0/747/747488.jpg"
                           ];
 autoScrollView.placeHolder = [UIImage imageNamed:@"place.jpg"]; //图片占位
-[autoScrollView createViews];
 [self.view addSubview:autoScrollView];
+[autoScrollView reloadData];
 </code></pre>
 如需自己实现图片加载 和图片点击事件 只要实现LZAutoScrollViewDelegate 里面的 imageClicked:(NSInteger)index方法 和 loadImageWithURLString:(NSString *)urlString andImageView:(UIImageView *)imageView; 就可以了
