@@ -31,5 +31,5 @@ typedef NS_ENUM(NSInteger, PageControlAligment) {
 @property (nonatomic, assign) NSTimeInterval interval; /**<间隔时间*/
 @property (nonatomic, assign) PageControlAligment pageControlAligment; /**<PageControl位置*/
 
-- (void)createViews;
+- (void)reloadData;
 @end

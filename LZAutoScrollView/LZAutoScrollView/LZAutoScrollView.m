@@ -80,8 +80,16 @@
     return self;
 }
 
-- (void)createViews {
-    NSAssert(self.images.count > 0, @"images must set.");
+- (void)awakeFromNib {
+    self.currentImageIndex = 0;
+    self.interval = 3.0;
+    self.pageControlAligment = PageControlAligmentRight;
+}
+
+- (void)reloadData {
+    for (UIView *subView in self.subviews) {
+        [subView removeFromSuperview];
+    }
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
     self.scrollView.delegate = self;
     self.scrollView.pagingEnabled = YES;
@@ -126,7 +134,9 @@
     self.pageControl.numberOfPages = self.images.count;
     [self addSubview:self.pageControl];
     
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.interval target:self selector:@selector(autoScroll) userInfo:nil repeats:YES];
+    if(self.timer == nil) {
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:self.interval target:self selector:@selector(autoScroll) userInfo:nil repeats:YES];
+    }
     
     [self ajustImageViewContent];
     
