@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "LZAutoScrollView.h"
 
-@interface ViewController ()<LZAutoScrollViewDelegate>
+@interface ViewController ()
 
 @end
 
@@ -20,7 +20,6 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     LZAutoScrollView *autoScrollView = [[LZAutoScrollView alloc] initWithFrame:CGRectMake(0, 20, 320, 150)];
-    autoScrollView.delegate = self;
     autoScrollView.titles = @[@"一", @"二", @"三"];
     autoScrollView.placeHolder = [UIImage imageNamed:@"place.jpg"];
     autoScrollView.pageControlAligment = PageControlAligmentCenter;

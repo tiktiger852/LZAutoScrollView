@@ -5,7 +5,6 @@
 使用说明：
 <pre><code>
 LZAutoScrollView *autoScrollView = [[LZAutoScrollView alloc] initWithFrame:CGRectMake(0, 20, 320, 150)];
-    autoScrollView.delegate = self;
     autoScrollView.titles = @[@"一", @"二", @"三"];
     autoScrollView.placeHolder = [UIImage imageNamed:@"place.jpg"];
     autoScrollView.pageControlAligment = PageControlAligmentCenter;

@@ -13,19 +13,10 @@ typedef NS_ENUM(NSInteger, PageControlAligment) {
     PageControlAligmentRight = 1
 };
 
-@protocol LZAutoScrollViewDelegate
-
-@optional
-- (void)imageClicked:(NSInteger)index; /**<图片点击事件*/
-- (void)loadImageWithURLString:(NSString *)urlString andImageView:(UIImageView *)imageView; /**<加载远程图片*/
-@end
-
 typedef void(^LoadImageBlock)(NSString *urlString, UIImageView *imageView);
 typedef void(^ItemClicked)(int index);
 
 @interface LZAutoScrollView : UIView
-
-@property (nonatomic, assign) id<LZAutoScrollViewDelegate> delegate;
 
 @property (nonatomic, strong) NSArray *images; /**<图片*/
 @property (nonatomic, strong) UIImage *placeHolder; /**<占位图片*/
