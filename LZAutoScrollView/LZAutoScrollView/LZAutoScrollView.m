@@ -63,6 +63,8 @@
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) NSTimer *timer;
 
+@property (nonatomic, strong) NSMutableDictionary *cacheDict;
+
 @property (nonatomic, assign) NSUInteger previousImageIndex;
 @property (nonatomic, assign) NSUInteger currentImageIndex;
 @property (nonatomic, assign) NSUInteger nextImageIndex;
@@ -80,17 +82,30 @@
     return self;
 }
 
-- (void)awakeFromNib {
-    self.currentImageIndex = 0;
-    self.interval = 3.0;
-    self.pageControlAligment = PageControlAligmentRight;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if(self) {
+        self.currentImageIndex = 0;
+        self.interval = 3.0;
+        self.pageControlAligment = PageControlAligmentRight;
+    }
+    return self;
 }
 
-- (void)reloadData {
-    for (UIView *subView in self.subviews) {
-        [subView removeFromSuperview];
-    }
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+- (void)setTitles:(NSArray *)titles {
+    _titles = titles;
+    
+    self.titleLabel = [[LZLabel alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame)-24, CGRectGetWidth(self.frame), 24) andInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
+    self.titleLabel.backgroundColor = [UIColor colorWithRed:(0.0/255.0) green:(0.0/255.0) blue:(0.0/255.0) alpha:0.25];
+    self.titleLabel.textColor = [UIColor whiteColor];
+    self.titleLabel.font = [UIFont systemFontOfSize:12.0];
+    [self addSubview:self.titleLabel];
+}
+
+- (void)setImages:(NSArray *)images {
+    _images = images;
+    
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
     self.scrollView.delegate = self;
     self.scrollView.pagingEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
@@ -111,35 +126,48 @@
     self.nextImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame)*2, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
     [self.scrollView addSubview:self.nextImageView];
     
-    if(self.placeHolder) {
-        self.previousImageView.image = self.placeHolder;
-        self.currentImageView.image = self.placeHolder;
-        self.nextImageView.image = self.placeHolder;
-    }
+    [self insertSubview:self.scrollView atIndex:0];
     
-    [self addSubview:self.scrollView];
-    if(self.titles) {
-        self.titleLabel = [[LZLabel alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame)-24, CGRectGetWidth(self.frame), 24) andInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
-        self.titleLabel.backgroundColor = [UIColor colorWithRed:(0.0/255.0) green:(0.0/255.0) blue:(0.0/255.0) alpha:0.25];
-        self.titleLabel.textColor = [UIColor whiteColor];
-        self.titleLabel.font = [UIFont systemFontOfSize:12.0];
-        [self addSubview:self.titleLabel];
-    }
-    
+    //PageControl
     self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame)-20*self.images.count, CGRectGetHeight(self.frame)-24, 20*self.images.count, 24)];
+    self.pageControl.currentPage = self.currentImageIndex;
+    self.pageControl.numberOfPages = self.images.count;
     if(self.pageControlAligment == PageControlAligmentCenter) {
         self.pageControl.center = CGPointMake(self.center.x, self.pageControl.center.y);
     }
-    self.pageControl.currentPage = self.currentImageIndex;
-    self.pageControl.numberOfPages = self.images.count;
     [self addSubview:self.pageControl];
     
     if(self.timer == nil) {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:self.interval target:self selector:@selector(autoScroll) userInfo:nil repeats:YES];
     }
     
-    [self ajustImageViewContent];
+    [self ajustContent];
+}
+
+- (void)setInterval:(NSTimeInterval)interval {
+    _interval = interval;
+    if(self.timer != nil) {
+        [self.timer invalidate];
+        self.timer = nil;
+    }
     
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:_interval target:self selector:@selector(autoScroll) userInfo:nil repeats:YES];
+}
+
+- (void)setPageControlAligment:(PageControlAligment)pageControlAligment {
+    _pageControlAligment = pageControlAligment;
+    if(self.pageControl == nil) {
+        return;
+    }
+    if(_pageControlAligment == PageControlAligmentCenter) {
+        self.pageControl.center = CGPointMake(self.center.x, self.pageControl.center.y);
+    }else if(_pageControlAligment == PageControlAligmentRight) {
+        self.pageControl.frame = CGRectMake(CGRectGetWidth(self.frame)-20*self.images.count, CGRectGetHeight(self.frame)-24, 20*self.images.count, 24);
+    }
+}
+
+- (void)setPlaceHolder:(UIImage *)placeHolder {
+    _placeHolder = placeHolder;
 }
 
 - (NSUInteger)previousImageIndex {
@@ -157,7 +185,7 @@
     return 0;
 }
 
-- (void)ajustImageViewContent {
+- (void)ajustContent {
     [self loadImageWithURLString:self.images[self.previousImageIndex] andImageView:self.previousImageView];
     [self loadImageWithURLString:self.images[self.currentImageIndex] andImageView:self.currentImageView];
     [self loadImageWithURLString:self.images[self.nextImageIndex] andImageView:self.nextImageView];
@@ -169,15 +197,15 @@
 }
 
 - (void)autoScroll {
-    [self.scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.scrollView.frame)*2, 0) animated:YES];
+    [self.scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.frame)*2, 0) animated:YES];
 }
 
 /**
  * 图片点击事件
  */
 - (void)imageTap {
-    if(self.delegate && [(NSObject *)self.delegate respondsToSelector:@selector(imageClicked:)]) {
-        [self.delegate imageClicked:self.currentImageIndex];
+    if(self.itemClicked) {
+        self.itemClicked(self.currentImageIndex);
     }
 }
 
@@ -185,10 +213,16 @@
  * 加载远程图片
  */
 - (void)loadImageWithURLString:(NSString *)urlString andImageView:(UIImageView *)imageView {
-    if(self.delegate && [(NSObject *)self.delegate respondsToSelector:@selector(loadImageWithURLString:andImageView:)]) {
-        [self.delegate loadImageWithURLString:urlString andImageView:imageView];
+    if(self.cacheDict == nil) {
+        self.cacheDict = [NSMutableDictionary dictionary];
+    }
+
+    NSString *key = [urlString md5];
+    if([self.cacheDict objectForKey:key] != nil) {
+        imageView.image = (UIImage *)[self.cacheDict objectForKey:key];
         return;
     }
+    
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSFileManager *manager = [NSFileManager defaultManager];
     NSString *dir = [path stringByAppendingPathComponent:@"autoScrollView"];
@@ -198,10 +232,12 @@
     if(!(isDirExist && isDir)) {
         [manager createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:nil];
     }
-    NSString *path2 = [path stringByAppendingString:[NSString stringWithFormat:@"%@", [urlString md5]]];
+    NSString *path2 = [path stringByAppendingString:[NSString stringWithFormat:@"%@", key]];
     NSData *data = [NSData dataWithContentsOfFile:path2];
     if(data != nil) {
-        imageView.image = [UIImage imageWithData:data];
+        UIImage *image = [UIImage imageWithData:data];
+        imageView.image = image;
+        [self.cacheDict setObject:image forKey:key];
     }else {
         imageView.image = self.placeHolder;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
@@ -213,19 +249,23 @@
 
 #pragma mark - UIScrollView Delegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [self.timer invalidate];
-    self.timer = nil;
+    if(self.timer != nil) {
+        [self.timer invalidate];
+        self.timer = nil;
+    }
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    
     int offset = floor(scrollView.contentOffset.x);
     if(offset == 0) {
         self.currentImageIndex = self.previousImageIndex;
-    }else if(offset == CGRectGetWidth(scrollView.frame)*2) {
+    }else if(offset == CGRectGetWidth(self.frame)*2) {
         self.currentImageIndex = self.nextImageIndex;
     }
-    [self ajustImageViewContent];
-    [scrollView setContentOffset:CGPointMake(CGRectGetWidth(scrollView.frame), 0) animated:NO];
     
+    [self ajustContent];
+    [self.scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.frame), 0) animated:NO];
+
     if(self.timer == nil) {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:self.interval target:self selector:@selector(autoScroll) userInfo:nil repeats:YES];
     }

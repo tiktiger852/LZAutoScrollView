@@ -20,6 +20,9 @@ typedef NS_ENUM(NSInteger, PageControlAligment) {
 - (void)loadImageWithURLString:(NSString *)urlString andImageView:(UIImageView *)imageView; /**<加载远程图片*/
 @end
 
+typedef void(^LoadImageBlock)(NSString *urlString, UIImageView *imageView);
+typedef void(^ItemClicked)(int index);
+
 @interface LZAutoScrollView : UIView
 
 @property (nonatomic, assign) id<LZAutoScrollViewDelegate> delegate;
@@ -30,6 +33,6 @@ typedef NS_ENUM(NSInteger, PageControlAligment) {
 
 @property (nonatomic, assign) NSTimeInterval interval; /**<间隔时间*/
 @property (nonatomic, assign) PageControlAligment pageControlAligment; /**<PageControl位置*/
+@property (nonatomic, strong) ItemClicked itemClicked; /**<当前图片点击block*/
 
-- (void)reloadData;
 @end
